@@ -1,0 +1,16 @@
+  .center {
+  margin-left: auto;
+  margin-right: auto;
+}
+            .imgcenter {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+            .paragraph {
+  margin: 35px;
+}
+            body {
+                background-color: lightblue;
+}
