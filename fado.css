@@ -26,3 +26,7 @@
   border: 5px inset red;
   padding: 5px;
 }
+h1 {
+  color: #800000;
+  margin:10px;
+}
