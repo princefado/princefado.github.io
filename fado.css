@@ -11,10 +11,13 @@
             .paragraph {
   margin: 35px;
 }
-            body {
-                background-color: #ff8080;
+  body {
+  background-color: #ff8080;
+  background: url("/margintile.png");
+  background-repeat: repeat;
 }
-body {
-border:25px solid #800000; 
+.content {
+  width: 1000px;
+  margin: auto;
+  background-color: #ff8080
 }
-
