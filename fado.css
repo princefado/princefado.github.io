@@ -15,9 +15,12 @@
   background-color: #ff8080;
   background: url("/margintile.png");
   background-repeat: repeat;
+  padding:0;
+  margin:0;
 }
 .content {
   width: 1000px;
   margin: auto;
-  background-color: #ff8080
+  background-color: #ff8080;
+  min-height: 100vh;
 }
