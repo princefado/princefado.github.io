@@ -45,7 +45,7 @@ p {
   font-family: Times, serif;
 }
 marquee {
-  animation: flash 1s linear infinite;
+  animation: flash 3s linear infinite;
 }
 @keyframes flash {
   0% {
