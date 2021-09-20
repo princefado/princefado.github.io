@@ -19,8 +19,8 @@
   margin:0;
 }
 .content {
-  width: 1000px;
-  margin: auto;
+  width: 1024px;
+  margin: 5px;
   background-color: #ff8080;
   min-height: 100vh;
   border: 5px inset #b30000;
