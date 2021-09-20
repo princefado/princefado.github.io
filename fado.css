@@ -23,6 +23,9 @@
   float: left;
 }
               
+ body {
+   background-color: #80000;
+} 
             .paragraph {
   margin: 35px;
 }
