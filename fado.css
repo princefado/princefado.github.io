@@ -44,5 +44,17 @@ p {
   color: #FAF9F6;
   font-family: Times, serif;
 }
-  
-  
+marquee {
+  animation: flash 1s linear infinite;
+}
+@keyframes flash {
+  0% {
+  color: #FAF9F6;
+  }
+  50% {
+  color: #800000;
+  }
+  100% {
+  color: #FAF9F6;
+  }
+}
