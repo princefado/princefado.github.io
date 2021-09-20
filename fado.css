@@ -8,6 +8,14 @@
   margin-right: auto;
   width: 99%;
 }
+            .imgside {
+  display: block;   
+  margin-left: 5px;
+  margin-right: 5px;
+  width: 250px;
+  float: right;
+}
+              
             .paragraph {
   margin: 35px;
 }
