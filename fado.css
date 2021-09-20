@@ -35,8 +35,14 @@
   margin: 35px;
 }
 h1 {
-  color: #800000;
+  color: #FAF9F6;
   margin:10px;
-  text-shadow: 2px 2px #ff0000
+  text-shadow: 2px 2px #ff0000;
   font-family: "Copperplate", Times, serif;
 }
+p {
+  color: #FAF9F6;
+  font-family: Times, serif;
+}
+  
+  
