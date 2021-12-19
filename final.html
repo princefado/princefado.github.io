@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Javascripts</title>
+        <link rel="stylesheet" href="fado.css">
+    </head>
+    <body>
+        <marquee> Marquees are fun and easy to make, and you should put them on every page (this is a joke)</marquee>
+        <img src="csc106_banner.jpg" class=imgcenter>
+      <table class="center">
+            <thead>
+                <tr>
+                     <th><a href="https://princefado.github.io/index.html"><img src="home.png"></a></th>
+                    <th><a href="https://princefado.github.io/javascripts.html"><img src="javascripts.png" ></a></th>
+                    <th><a href="https://princefado.github.io/aboutme.html"><img src="aboutme.png"></a></th>
+                </tr>
+            </thead>
+        </table>
+<script>
+       var numCol = 15;
+var numRow = 15;
+var squareColors = [color(255, 255, 255), color(51, 51, 51), color(230, 55, 55), color(247, 235, 74), color(59, 203, 255), color(103, 196, 67)];
+var currentColor = 0;
+var currentScene = 0;
+var gridWidth = 350;
+
+var squares = [];
+
+//Creates the squares objects
+var Squares = function (x, y, label){
+    this.x = x;
+    this.y = y;
+    this.size = gridWidth/numCol;
+    this.label = label;
+    this.color = color(255, 255, 255);
+    this.index = squares.length;
+};
+
+//Array which contains the pattern for the finished heart image
+var finishedHeart = [
+    "000000000000000",
+    "001111000111100",
+    "012222101222210",
+    "122222212200221",
+    "122222222220221",
+    "122222222222221",
+    "122222222222221",
+    "012222222222210",
+    "001222222222100",
+    "000122222221000",
+    "000012222210000",
+    "000001222100000",
+    "000000121000000",
+    "000000010000000",
+    "000000000000000"
+].join("");
+
+//Array which contains the pattern for the finished image done by Gabriel
+var finishedGabriel = [
+    "333434444444444",
+    "333444111444000",
+    "333431222140000",
+    "444411222110000",
+    "343122212221000",
+    "444122131221400",
+    "444412212214444",
+    "444001222144444",
+    "400000121044444",
+    "000011111004444",
+    "400155151014444",
+    "440015151151444",
+    "444441151551444",
+    "111111151511111",
+    "555555151155555"
+].join("");
+
+//Array which contains the pattern for the finished image done by Kerem
+var finishedKerem = [
+    "000000000000000",
+    "111111111111111",
+    "144444422222221",
+    "144444400000001",
+    "144444422222221",
+    "144444400000001",
+    "144444422222221",
+    "100000000000001",
+    "122222222222221",
+    "100000000000001",
+    "122222222222221",
+    "100000000000001",
+    "122222222222221",
+    "111111111111111",
+    "000000000000000"
+].join("");
+
+//Gabriel's Bitmoji 
+function drawGabriel (bodyX,bodyY,bodyHeight) {
+//neck
+    strokeWeight(1);
+    stroke (0, 0, 0);
+    fill(245, 234, 218);
+    rect(bodyX-(bodyHeight/50*11),bodyY-(bodyHeight/50*14),bodyHeight/50*25,bodyHeight/50*25);
+    rect(bodyX-(bodyHeight/50*32),bodyY+(bodyHeight/50*4),bodyHeight/50*59,bodyHeight/50*26);
+    noStroke();
+    triangle(bodyX+(bodyHeight/50*36),bodyY+(bodyHeight/50*8),bodyX-(bodyHeight/50*5),bodyY+(bodyHeight/50*37),bodyX-(bodyHeight/50*10),bodyY+(bodyHeight/50));
+//torso
+    strokeWeight(1);
+    fill(245, 234, 218);
+    noStroke();
+    ellipse(bodyX-(bodyHeight/50*30),bodyY+(bodyHeight/50*24),bodyHeight/50*27,bodyHeight/50*37);
+    fill(255, 0, 0);
+    stroke(0, 0, 0);
+    arc(bodyX-(bodyHeight/50*25),bodyY+(bodyHeight/50*18),bodyHeight/50*34,bodyHeight/50*42,162,322);
+    fill(255, 0, 0);
+    arc(bodyX-(bodyHeight/50*16),bodyY+(bodyHeight/50*25),bodyHeight/50*40,bodyHeight/50*32,50,250);
+    noStroke();
+    rect(bodyX-(bodyHeight/50*23),bodyY+(bodyHeight/50*10),bodyHeight/50*56,bodyHeight/50*31);
+    stroke(0, 0, 0);
+    fill(245, 234, 218);
+    ellipse(bodyX+(bodyHeight/50*38),bodyY+(bodyHeight/50*21),bodyHeight/50*32,bodyHeight/50*37);
+    fill(255, 0, 0);
+    stroke(0, 0, 0);
+    arc(bodyX+(bodyHeight/50*16),bodyY+(bodyHeight/50*25),bodyHeight/50*40,bodyHeight/50*32,80,190);
+    arc(bodyX+(bodyHeight/50*37),bodyY+(bodyHeight/50*13),bodyHeight/50*37,bodyHeight/50*42,162,363);
+    noStroke();
+    fill(245, 234, 218);
+    ellipse(bodyX+(bodyHeight/50*41),bodyY+(bodyHeight/50*33),bodyHeight/50*27,bodyHeight/50*21);
+
+//initials
+    fill(255, 196, 0);
+    textSize(bodyHeight/50*25);
+    text("GP",bodyX-(bodyHeight/50*26),bodyY+(bodyHeight/50*15),bodyHeight/50*50,bodyHeight/50*50);
+
+//face
+    stroke(0, 0, 0);
+    fill(245, 234, 218);
+    ellipse(bodyX,bodyY-(bodyHeight/50*41),bodyHeight/50*72,bodyHeight/50*82);
+//beautymark
+    fill(0, 0, 0);
+    ellipse(bodyX-(bodyHeight/50*12),bodyY-(bodyHeight/50*9),bodyHeight/50*1.5,bodyHeight/50*1.5);
+//upperlip
+    fill(255, 0, 0);
+    arc(bodyX,bodyY-(bodyHeight/50*17),bodyHeight/50*15,bodyHeight/50*10,207,343);
+//lowerlip
+    arc(bodyX,bodyY-(bodyHeight/50*17),bodyHeight/50*15,bodyHeight/50*10,-21,189);
+//ponytail
+    fill(59, 37, 0);
+    stroke(0, 0, 0);
+    ellipse(bodyX+(bodyHeight/50*25),bodyY-(bodyHeight/50*83),bodyHeight/50*41,bodyHeight/50*52);
+    arc(bodyX+(bodyHeight/50*54),bodyY-(bodyHeight/50*75),bodyHeight/50*34,bodyHeight/50*66,25,229);
+    arc(bodyX+(bodyHeight/50*59),bodyY-(bodyHeight/50*64),bodyHeight/50*51,bodyHeight/50*78,25,229);
+    arc(bodyX+(bodyHeight/50*65),bodyY-(bodyHeight/50*23),bodyHeight/50*60,bodyHeight/50*60,67,234);
+//scalp
+    fill(59, 37, 0);
+    rect(bodyX-(bodyHeight/50*24),bodyY-(bodyHeight/50*94),bodyHeight/50*51,bodyHeight/50*26);
+    ellipse(bodyX,bodyY-(bodyHeight/50*82),bodyHeight/50*70,bodyHeight/50*42);
+//right ear
+    fill(245, 234, 218);
+    ellipse(bodyX+(bodyHeight/50*40),bodyY-(bodyHeight/50*40), bodyHeight/50*14,bodyHeight/50*21);
+//right earring
+    noStroke();
+    fill(255, 0, 0);
+    ellipse(bodyX+(bodyHeight/50*41),bodyY-(bodyHeight/50*33),bodyHeight/50*5,bodyHeight/50*5);
+    fill(255, 0, 0);
+    ellipse(bodyX+(bodyHeight/50*43),bodyY-(bodyHeight/50*35),bodyHeight/50*5,bodyHeight/50*5);
+    fill(255, 0, 0);
+    ellipse(bodyX+(bodyHeight/50*39),bodyY-(bodyHeight/50*35),bodyHeight/50*5,bodyHeight/50*5);
+//nose
+    stroke(0, 0, 0);
+    fill(245, 234, 218);
+    arc(bodyX-(bodyHeight/50*5),bodyY-(bodyHeight/50*33),bodyHeight/50*7,bodyHeight/50*9,-239,-92);
+//catearleft
+    fill(59, 37, 0);
+    arc(bodyX-(bodyHeight/50*9),bodyY-(bodyHeight/50*90),bodyHeight/50*60,bodyHeight/50*80,-208,-160);
+    noStroke();
+    fill(255, 209, 243);
+    arc(bodyX-(bodyHeight/50*18),bodyY-(bodyHeight/50*90),bodyHeight/50*35,bodyHeight/50*45,-208,-156);
+//catearright
+    stroke(0, 0, 0);
+    fill(59, 37, 0);
+    arc(bodyX+(bodyHeight/50*18),bodyY-(bodyHeight/50*80),bodyHeight/50*60,bodyHeight/50*80,-36, -5);
+    noStroke();
+    fill(255, 209, 243);
+    arc(bodyX+(bodyHeight/50*25),bodyY-(bodyHeight/50*90),bodyHeight/50*35,bodyHeight/50*45,-24,31);
+//bangs
+    stroke(0, 0, 0);
+    fill(255, 250, 250);
+    arc(bodyX-(bodyHeight/50*7),bodyY-(bodyHeight/50*83),bodyHeight/50*45, bodyHeight/50*50, 54,202);
+    fill(255, 250, 250);
+    arc(bodyX+(bodyHeight/50*8),bodyY-(bodyHeight/50*83),bodyHeight/50*45,bodyHeight/50*50,54,202);
+    fill(255, 250, 250);
+    arc(bodyX+(bodyHeight/50*25),bodyY-(bodyHeight/50*83),bodyHeight/50*45,bodyHeight/50*50,54,207);
+    noStroke();
+    fill(255, 250, 250);
+    ellipse(bodyX,bodyY-(bodyHeight/50*85),bodyHeight/50*51,bodyHeight/50*28);
+//lefteyewhite
+    stroke(0, 0, 0);
+    fill(255, 255, 255);
+    arc(bodyX+(bodyHeight/50*15),bodyY-(bodyHeight/50*39),bodyHeight/50*20,bodyHeight/50*25, 176,344);
+//righteyewhite
+    stroke(0, 0, 0);
+    fill(255, 255, 255);
+    arc(bodyX-(bodyHeight/50*18),bodyY-(bodyHeight/50*39),bodyHeight/50*20,bodyHeight/50*25, 184,365);
+//leftiris
+    stroke(0, 0, 0);
+    fill(255, 0, 0);
+    ellipse(bodyX+(bodyHeight/50*19),bodyY-(bodyHeight/50*44),bodyHeight/50*10,bodyHeight/50*15);
+//rightiris
+    fill(255, 179, 0);
+    ellipse(bodyX-(bodyHeight/50*14),bodyY-(bodyHeight/50*44),bodyHeight/50*10,bodyHeight/50*15);
+//leftpupil
+    fill(0, 0, 0);
+    ellipse(bodyX+(bodyHeight/50*20),bodyY-(bodyHeight/50*45),bodyHeight/50*2,bodyHeight/50*7);
+//rightpupil
+    fill(0, 0, 0);
+    ellipse(bodyX-(bodyHeight/50*13),bodyY-(bodyHeight/50*45),bodyHeight/50*2,bodyHeight/50*7);
+//lefteyebrow
+    noFill();
+    strokeWeight(2);
+    stroke(0, 0, 0);
+    arc(bodyX-(bodyHeight/50*23),bodyY-(bodyHeight/50*62), bodyHeight/50*25,bodyHeight/50*10,-126,-26);
+//righteyebrow
+    noFill();
+    strokeWeight(2);
+    stroke(0, 0, 0);
+    arc(bodyX+(bodyHeight/50*17),bodyY-(bodyHeight/50*62),bodyHeight/50*25,bodyHeight/50*10,-146,-42);
+//mouth
+    arc(bodyX,bodyY-(bodyHeight/50*31),bodyHeight/50*25,bodyHeight/50*-30,-129,-42);
+//sidehairleft
+    stroke(0, 0, 0);
+    strokeWeight(1);
+    fill(59, 37, 0);
+    bezier(bodyX-(bodyHeight/50*28),bodyY-(bodyHeight/50*80),bodyX-(bodyHeight/50*76),bodyY-(bodyHeight/50*16),bodyX,bodyY-(bodyHeight/50*53),bodyX-(bodyHeight/50*37),bodyY+(bodyHeight/50*18));
+//sidehairright
+    bezier(bodyX+(bodyHeight/50*22),bodyY-(bodyHeight/50*100),bodyX+(bodyHeight/50*81),bodyY-(bodyHeight/50*12),bodyX-(bodyHeight/50*7),bodyY-(bodyHeight/50*55),bodyX+(bodyHeight/50*37),bodyY+(bodyHeight/50*18));
+//glasses
+    noFill();
+    strokeWeight(2);
+    stroke(255, 196, 0);
+    ellipse(bodyX-(bodyHeight/50*20),bodyY-(bodyHeight/50*43),bodyHeight/50*25,bodyHeight/50*25);
+    ellipse(bodyX+(bodyHeight/50*16),bodyY-(bodyHeight/50*43),bodyHeight/50*25,bodyHeight/50*25);
+    line(bodyX+(bodyHeight/50*2),bodyY-(bodyHeight/50*48),bodyX-(bodyHeight/50*8),bodyY-(bodyHeight/50*48));
+}
+
+//Kerem's Bitmoji
+var drawBit=function(x,y,bitHeight) {
+
+noStroke();
+fill(255, 224, 189);
+ellipse(x,y, bitHeight/100*76,bitHeight/100*100);//head
+fill(0, 0, 0);
+quad(x-(bitHeight/100*42),y-(bitHeight/100*8),x-(bitHeight/100*35),y-(bitHeight/100*23),x-(bitHeight/100*20),y-(bitHeight/100*37),x-(bitHeight/100*30),y-(bitHeight/100*3));
+quad(x+(bitHeight/100*40),y-(bitHeight/100*8),x+(bitHeight/100*34),y-(bitHeight/100*23),x+(bitHeight/100*21),y-(bitHeight/100*37),x+(bitHeight/100*29),y-(bitHeight/100*3));
+fill(255, 0, 0);
+arc(x,y-(bitHeight/100*30),bitHeight/100*65,bitHeight/100*80,-180,0);
+fill(0,0,0);
+arc(x,y-(bitHeight/100*35),bitHeight/100*30,bitHeight/100*33,-180,0);
+fill(255, 255, 255);
+stroke(5,5,5);
+ellipse(x+(bitHeight/100*16),y-(bitHeight/100*11),bitHeight/100*10,bitHeight/100*10);//right eye
+ellipse(x-(bitHeight/100*16),y-(bitHeight/100*11),(bitHeight/100*10),(bitHeight/100*10));//left eye
+strokeWeight(2);
+fill(168, 180, 97);
+point(x+(bitHeight/100*16),y-(bitHeight/100*11));
+point(x-(bitHeight/100*16),y-(bitHeight/100*11));
+strokeWeight(2);
+fill(255, 224, 189);
+bezier(x+(bitHeight/100*4),y-(bitHeight/100*12),x-(bitHeight/100*22),y-(bitHeight/100*40),x+(bitHeight/100*45),y+(bitHeight/100*34),x-(bitHeight/100*1),y);
+fill(255, 255, 255);
+arc(x+(bitHeight/100*3),y+(bitHeight/100*25),bitHeight/100*30,bitHeight/100*30,1,180);
+line(x-(bitHeight/100*14),y+(bitHeight/100*24),x+(bitHeight/100*19),y+(bitHeight/100*24));
+fill(155, 224, 184);
+rect(x+(bitHeight/100*42),y+(bitHeight/100*50),bitHeight/100*-80,bitHeight/100*87);
+fill(255, 255, 255);
+textSize(bitHeight/95*25);
+text("KE",x-(bitHeight/73*26),y+(bitHeight/30*15),bitHeight/50*50,bitHeight/50*50);
+
+};
+
+//Base object for start/menu buttons. When clicked, each button intiates a for loop which adds the finished array into the grid. 
+var Button = function(config) {
+    this.scene = config.scene || 0;
+    this.color = config.color || color(255, 255, 255);
+    this.x = config.x || 0;
+    this.y = config.y || 0;
+    this.width = config.width || 120;
+    this.height = config.height || 50;
+    this.label = config.label || "Click";
+    this.onClick = config.onClick || function() {};
+};
+
+//Base object for the buttons in the game screen which change your fill color.
+var colorButton = function(config) {
+    this.scene = config.scene || 0;
+    this.color = config.color || color(255, 255, 255);
+    this.textColor = config.textColor || color(0, 0, 0);
+    this.x = config.x || 0;
+    this.y = config.y || 0;
+    this.width = config.width || 150;
+    this.height = config.height || 50;
+    this.label = config.label || "Click";
+    this.onClick = config.onClick || function() {};
+};
+
+Button.prototype.draw = function() {
+    fill(this.color);
+    rect(this.x, this.y, this.width, this.height, 5);
+    fill(0, 0, 0);
+    textSize(19);
+    textAlign(CENTER, TOP);
+    text(this.label, this.x+60, this.y+this.height/4);
+};
+
+colorButton.prototype.draw = function() {
+    fill(this.color);
+    rect(this.x, this.y, this.width, this.height, 5);
+    fill(0, 0, 0);
+    textSize(19);
+    textAlign(CENTER, TOP);
+    fill(this.textColor);
+    text(this.label, this.x+25, this.y+this.height/4);
+};
+
+Button.prototype.isMouseInside = function() {
+    return mouseX > this.x &&
+           mouseX < (this.x + this.width) &&
+           mouseY > this.y &&
+           mouseY < (this.y + this.height);
+};
+
+colorButton.prototype.isMouseInside = function() {
+    return mouseX > this.x &&
+           mouseX < (this.x + this.width) &&
+           mouseY > this.y &&
+           mouseY < (this.y + this.height);
+};
+
+Button.prototype.handleMouseClick = function() {
+    if (this.isMouseInside()&&currentScene===this.scene) {
+        this.onClick();
+    }
+};
+
+colorButton.prototype.handleMouseClick = function() {
+    if (this.isMouseInside()&&currentScene===this.scene) {
+        this.onClick();
+    }
+};
+
+var startHeart = new Button({
+    color: color(255, 163, 163),
+    scene:0,
+    x:140,
+    y:315,
+    label: "Heart",
+    onClick: function() {
+        squares = [];
+        for (var i = 0; i < numCol; i++) {
+        for (var j = 0; j < numRow; j++) {
+            squares.push(new Squares(j * (gridWidth/numRow-1), i * (gridWidth/numRow-1), (finishedHeart[squares.length])));
+        }
+}
+        currentScene = 1;
+    }
+});
+
+var startGabriel = new Button({
+    color: color(186, 255, 163),
+    scene:0,
+    x:10,
+    y:315,
+    label: "Flower",
+    onClick: function() {
+        squares = [];
+        for (var i = 0; i < numCol; i++) {
+        for (var j = 0; j < numRow; j++) {
+            squares.push(new Squares(j * (gridWidth/numRow-1), i * (gridWidth/numRow-1), (finishedGabriel[squares.length])));
+        }
+}
+        currentScene = 1;
+    }
+});
+
+var startKerem = new Button({
+    color: color(163, 186, 255),
+    scene:0,
+    x:270,
+    y:315,
+    label: "Flag",
+    onClick: function() {
+        squares = [];
+        for (var i = 0; i < numCol; i++) {
+        for (var j = 0; j < numRow; j++) {
+            squares.push(new Squares(j * (gridWidth/numRow-1), i * (gridWidth/numRow-1), (finishedKerem[squares.length])));
+        }
+}
+        currentScene = 1;
+    }
+});
+
+var mainMenu = new Button({
+    scene:2,
+    x:125,
+    y:275,
+    label: "Main Menu",
+    onClick: function() {
+        currentScene = 0;
+    }
+});
+
+var whiteFill = new colorButton({
+    scene: 1,
+    color: squareColors[0],
+    textColor: color(0, 0, 0),
+    x: 10,
+    y: 345,
+    width: 50,
+    label: "0",
+    onClick: function() {
+        currentColor = 0;
+    }
+});
+
+var blackFill = new colorButton({
+    scene: 1,
+    color: squareColors[1],
+    textColor: color(255, 255, 255),
+    x: 70,
+    y: 345,
+    width: 50,
+    label: "1",
+    onClick: function() {
+        currentColor = 1;
+    }
+});
+
+var redFill = new colorButton({
+    scene: 1,
+    color: squareColors[2],
+    textColor: color(0, 0, 0),
+    x: 130,
+    y: 345,
+    width: 50,
+    label: "2",
+    onClick: function() {
+        currentColor = 2;
+    }
+});
+
+var yellowFill = new colorButton({
+    scene: 1,
+    color: squareColors[3],
+    textColor: color(0, 0, 0),
+    x: 190,
+    y: 345,
+    width: 50,
+    label: "3",
+    onClick: function() {
+        currentColor = 3;
+    }
+});
+
+var blueFill = new colorButton({
+    scene: 1,
+    color: squareColors[4],
+    textColor: color(0, 0, 0),
+    x: 250,
+    y: 345,
+    width: 50,
+    label: "4",
+    onClick: function() {
+        currentColor = 4;
+    }
+});
+
+var greenFill = new colorButton({
+    scene: 1,
+    color: squareColors[5],
+    textColor: color(0, 0, 0),
+    x: 310,
+    y: 345,
+    width: 50,
+    label: "5",
+    onClick: function() {
+        currentColor = 5;
+    }
+});
+
+//Home screen
+var homeScreen = function(){
+    background(212, 212, 212);
+    fill(0, 0, 0);
+    textSize(32);
+    text("Let's paint by number!", 195,75);
+    textSize(20);
+    text("Pick a shape to get started!",200,115);
+    startHeart.draw();
+    startKerem.draw();
+    startGabriel.draw();
+    drawGabriel(120,245,40);
+    drawBit(271,195,70);
+};
+
+
+//Prototype which defines the size of the squares and changes their color but keeps the text if they are filled in with the wrong color
+Squares.prototype.draw = function() {
+    fill(this.color);
+    strokeWeight(1);
+    rect(this.x, this.y, this.size, this.size, 1);
+    textSize(20);
+    textAlign(CENTER, CENTER);
+    if(!this.complete){
+        fill(0, 0, 0);
+        text(this.label, this.x+this.size/2, this.y+this.size/2);
+    }
+};
+
+Squares.prototype.empty = function() {
+    return this.label === "";
+};
+
+Squares.prototype.onClick = function() {
+//If the label of the tile equals the label of color, fill the square and remove the number
+//If the label of the tile does not equal the label of the color, fill the square but leave the number
+
+    this.color = squareColors[currentColor];
+    
+    if(this.label === currentColor.toString()){
+        this.complete = true;
+    }
+    else {
+        this.complete = false;
+    }
+
+};
+
+ // Check for mouse clicks inside the tile
+Squares.prototype.handleMouseClick = function(x, y) {
+    if ( x >= this.x && x <= this.x + this.size && y >= this.y && y <= this.y + this.size)
+    {
+        this.onClick();
+    }
+};
+
+//Function which, when called, does a for loop which draws the grid
+var drawSquares = function() {
+        for (var i in squares) {
+            squares[i].draw();
+        }
+};
+
+//Shows grid and buttons to change color
+var gameScreen = function(){
+    background(255, 255, 255);
+    drawSquares();
+    whiteFill.draw();
+    blackFill.draw();
+    redFill.draw();
+    yellowFill.draw();
+    blueFill.draw();
+    greenFill.draw();
+};
+
+
+//Allows mouse clicks. Also checks that each square has been filled with the appropriate label. If the squares have been filled, it triggers the win screen to appear where you can return to the main menu.
+mouseClicked = function() {
+    startHeart.handleMouseClick();
+    startKerem.handleMouseClick();
+    startGabriel.handleMouseClick();
+    whiteFill.handleMouseClick();
+    blackFill.handleMouseClick();
+    redFill.handleMouseClick();
+    yellowFill.handleMouseClick();
+    blueFill.handleMouseClick();
+    greenFill.handleMouseClick();
+    mainMenu.handleMouseClick();
+    for (var i in squares){
+        squares[i].handleMouseClick(mouseX,mouseY);
+    }
+    if (squares.length !== 0) {
+        var completeCheck = true;
+        for (var i in squares){
+            if (!squares[i].complete){
+                completeCheck = false;
+            }
+        }
+        if(completeCheck){
+             currentColor = 0;
+             currentScene = 2;
+        }
+    }
+};
+
+//Changes screen depending on the current scene number, and also triggers win message which allows you to go back to the main screen
+draw = function() {
+    if(currentScene === 0){
+        homeScreen();
+    }
+    else if(currentScene === 1){
+        gameScreen();
+    }
+    else if(currentScene === 2){
+        fill(255, 255, 255);
+        rect(0,200,400,50);
+        fill(255, 0, 0);
+        textSize(50);
+        text("Good job!", 200, 195);
+        mainMenu.draw();
+    }
+};
+      </script>
+
+</html>
+                                                                            <
